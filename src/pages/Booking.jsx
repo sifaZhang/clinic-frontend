@@ -13,6 +13,7 @@ export default function BookAppointment() {
     const [doctors, setDoctors] = useState([]);
     const [selectedDoctor, setSelectedDoctor] = useState("");
     const [selectedDate, setSelectedDate] = useState("");
+    const [selectedDoctorDesc, setSelectedDoctorDesc] = useState("");
 
     const [slots, setSlots] = useState([]);
     const [loadingSlots, setLoadingSlots] = useState(false);
@@ -118,7 +119,11 @@ export default function BookAppointment() {
                         <select
                             className="slot-input"
                             value={selectedDoctor}
-                            onChange={(e) => setSelectedDoctor(e.target.value)}
+                            onChange={(e) => {
+                                setSelectedDoctor(e.target.value);
+                                const doc = doctors.find(d => String(d.id) === e.target.value);
+                                setSelectedDoctorDesc(doc ? doc.description : "");
+                            }}
                         >
                             <option value="">-- Choose a doctor --</option>
                             {doctors.map((d) => (
@@ -127,6 +132,12 @@ export default function BookAppointment() {
                                 </option>
                             ))}
                         </select>
+
+                        {selectedDoctorDesc && (
+                            <div className="doctor-desc">
+                                <p>{selectedDoctorDesc}</p>
+                            </div>
+                        )}
 
                         <label className="slot-label">Date</label>
                         <input
