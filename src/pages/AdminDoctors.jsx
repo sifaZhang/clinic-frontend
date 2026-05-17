@@ -50,7 +50,10 @@ export default function AdminDoctors() {
             fetchDoctors();
         } catch (error) {
             console.log("Error adding doctor:", error);
-            alert("Only admin can add doctors");
+            const msg = error.response?.data
+                ? JSON.stringify(error.response.data)
+                : "Failed to add doctor";
+            alert(msg);
         }
     };
 
@@ -62,7 +65,10 @@ export default function AdminDoctors() {
             fetchDoctors();
         } catch (error) {
             console.log("Error deleting doctor:", error);
-            alert("Only admin can delete doctors");
+            const msg = error.response?.data
+                ? JSON.stringify(error.response.data)
+                : "Failed to delete doctor";
+            alert(msg);
         }
     };
 
@@ -75,12 +81,14 @@ export default function AdminDoctors() {
     const handleSaveEdit = async () => {
         try {
             await adminAxios.put(`/manage/doctors/${editingDoctor.id}/`, editingDoctor);
-            //alert("Doctor updated!");
             setEditingDoctor(null);
             fetchDoctors();
         } catch (error) {
             console.log("Error updating doctor:", error);
-            alert("Only admin can edit doctors");
+            const msg = error.response?.data
+                ? JSON.stringify(error.response.data)
+                : "Failed to update doctor";
+            alert(msg);
         }
     };
 
